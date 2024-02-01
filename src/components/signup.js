@@ -16,6 +16,25 @@ export default function Signup() {
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" action="#" method="POST">
+
+
+            <div>
+                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                  Username
+                </label>
+                <div className="mt-2">
+                  <input
+                    id=""
+                    name=""
+                    type="text"
+                    autoComplete="email"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -37,11 +56,7 @@ export default function Signup() {
                   <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                     Password
                   </label>
-                  <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </a>
-                  </div>
+       
                 </div>
                 <div className="mt-2">
                   <input
@@ -54,6 +69,29 @@ export default function Signup() {
                   />
                 </div>
               </div>
+
+              <div>
+  <label htmlFor="location" className="block text-sm font-medium leading-6 text-gray-900">
+    Location
+  </label>
+  <div className="mt-2">
+    <select
+      id="location"
+      name="location"
+      autoComplete="location"
+      required
+      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    >
+      <option value="">Select a country</option>
+      <option value="pakistan">Pakistan</option>
+      <option value="usa">USA</option>
+      <option value="uk">UK</option>
+      <option value="canada">Canada</option>
+      <option value="australia">Australia</option>
+    </select>
+  </div>
+</div>
+
   
               <div>
                 <button
