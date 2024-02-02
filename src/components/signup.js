@@ -1,5 +1,45 @@
+"use client"
+
+
+import authService from "@/api/userApi"
+import { Asul } from "next/font/google";
+import { React,useState } from "react"
+import { useEffect } from "react"
+import { useDispatch } from 'react-redux';
+import { loginUser } from "@/redux/slices/userSlices";
+
+
 
 export default function Signup() {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [location, setLocation] = useState('');
+  const [password, setPassword] = useState('');
+    // const dispatch=useDispatch()
+  
+  const handleSignup=async(e)=>{
+    e.preventDefault();
+
+    const userData={
+      name:name,
+      location:location,
+      email:email,
+      password:password,
+    }
+    try{
+      const response=authService.signup(userData)
+      if(response){
+        // dispatch(loginUser(response))
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
+
+    
+  
+  }
     return (
       <>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -30,6 +70,8 @@ export default function Signup() {
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={(e) => setName(e.target.value)}
+
                   />
                 </div>
               </div>
@@ -47,6 +89,8 @@ export default function Signup() {
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={(e) => setEmail(e.target.value)}
+
                   />
                 </div>
               </div>
@@ -66,7 +110,9 @@ export default function Signup() {
                     autoComplete="current-password"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                    onChange={(e) => setPassword(e.target.value)}
+
+                    />
                 </div>
               </div>
 
@@ -81,6 +127,8 @@ export default function Signup() {
       autoComplete="location"
       required
       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      onChange={(e) => setLocation(e.target.value)}
+
     >
       <option value="">Select a country</option>
       <option value="pakistan">Pakistan</option>
@@ -97,6 +145,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={()=>{handleSignup()}}
                 >
                   Sign in
                 </button>
