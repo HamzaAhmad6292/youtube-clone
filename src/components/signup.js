@@ -5,8 +5,8 @@ import authService from "@/api/userApi"
 import { Asul } from "next/font/google";
 import { React,useState } from "react"
 import { useEffect } from "react"
-import { useDispatch } from 'react-redux';
 import { loginUser } from "@/redux/slices/userSlices";
+import { useAppSelector, useAppDispatch, useAppStore } from '../redux/hooks'
 
 
 
@@ -16,7 +16,19 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [location, setLocation] = useState('');
   const [password, setPassword] = useState('');
-    // const dispatch=useDispatch()
+
+  const store = useAppStore()
+
+  const dispatch=useAppDispatch()
+
+
+
+
+
+
+
+
+
   
   const handleSignup=async(e)=>{
     e.preventDefault();
@@ -30,11 +42,12 @@ export default function Signup() {
     try{
       const response=authService.signup(userData)
       if(response){
-        // dispatch(loginUser(response))
+        
+        dispatch(loginUser(response))
+        console.log("Hamza The Great")
       }
     }
     catch(error){
-      console.log(error)
     }
 
     
