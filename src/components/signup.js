@@ -7,7 +7,7 @@ import { React,useState } from "react"
 import { useEffect } from "react"
 import { loginUser } from "@/redux/slices/userSlices";
 import { useAppSelector, useAppDispatch, useAppStore } from '../redux/hooks'
-
+import { useRouter } from 'next/router';
 
 
 export default function Signup() {
@@ -20,34 +20,36 @@ export default function Signup() {
   const store = useAppStore()
 
   const dispatch=useAppDispatch()
+  const router=useRouter()
 
 
 
 
-
+  const userData={
+    name:name,
+    location:location,
+    email:email,
+    password:password,
+  }
 
 
 
 
   
   const handleSignup=async(e)=>{
-    e.preventDefault();
+    e.preventDefault()
 
-    const userData={
-      name:name,
-      location:location,
-      email:email,
-      password:password,
-    }
+    console.log(userData)
+    
     try{
-      const response=authService.signup(userData)
-      if(response){
+      const response= await authService.signup(userData)
+      if(response.status===200){
+        router.push("/login");
         
-        dispatch(loginUser(response))
-        console.log("Hamza The Great")
-      }
     }
+  }
     catch(error){
+      console.log(error)
     }
 
     
@@ -158,7 +160,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  onClick={()=>{handleSignup()}}
+                  onClick={(e)=>{handleSignup(e)}}
                 >
                   Sign in
                 </button>
