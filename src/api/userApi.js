@@ -7,9 +7,9 @@ const authService = {
   login: async (credentials) => {
     try {
       const response = await axios.post(`${BASE_URL}/users/loginuser`, credentials);
-      return response.data; // Assuming your API returns user data upon successful login
+      return response;
     } catch (error) {
-      throw new Error(error.response.data.message || 'Login failed');
+      console.log(error)
     }
   },
 

@@ -1,8 +1,42 @@
+"use client"
 
-
+import { React,useState,useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Passions_Conflict } from "next/font/google"
+import authService from "@/api/userApi"
+import { useDispatch, useSelector, useStore } from 'react-redux'
+import { loginUser } from "@/redux/slices/userSlices"
 
 
 export default function Login() {
+
+const [email,setemail]=useState("")
+const [password,setpassword]=useState("")
+const router=useRouter()
+
+const userData={
+  email:email,
+  password:password
+}
+const dispatch=useDispatch()
+
+
+const handleSubmit=async(e)=>{
+  e.preventDefault()
+  try{
+  const response= await authService.login(userData)
+  if(response?.status===200){
+    dispatch(loginUser(response?.data))
+    router.replace("/home")
+  }
+}
+catch(error){
+  console.log(error)
+
+}
+}
+
+
     return (
       <>
        
@@ -31,6 +65,7 @@ export default function Login() {
                     type="email"
                     autoComplete="email"
                     required
+                    onChange={(e)=>{setemail(e.target.value)}}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -54,6 +89,8 @@ export default function Login() {
                     type="password"
                     autoComplete="current-password"
                     required
+                    onChange={(e)=>{setpassword(e.target.value)}}
+
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -63,6 +100,7 @@ export default function Login() {
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={(e)=>{handleSubmit(e)}}
                 >
                 Login
                 </button>

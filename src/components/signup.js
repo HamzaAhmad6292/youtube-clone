@@ -7,7 +7,7 @@ import { React,useState } from "react"
 import { useEffect } from "react"
 import { loginUser } from "@/redux/slices/userSlices";
 import { useAppSelector, useAppDispatch, useAppStore } from '../redux/hooks'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 
 export default function Signup() {
