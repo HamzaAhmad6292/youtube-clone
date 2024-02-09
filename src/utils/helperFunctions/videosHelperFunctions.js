@@ -1,21 +1,18 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-
-
-export const uploadVideo = async ({setVideoUrl,setThumbnailUrl,videoFile,thumbnailFile}) => {
-  const storage = getStorage();
+import storage from "../../../firebase/ClientApp";
+export const uploadVideotoFirebase = async ({setVideoUrl,setThumbnailUrl,videoFile,thumbnailFile}) => {
 
 
 
     if (videoFile && thumbnailFile) {
-      // Upload files to Firebase Storage
       const videoRef = ref(storage, `videos/${videoFile.name}`);
-      const uploadedVideo=uploadBytesResumable(videoRef,videoFile)
+      await uploadBytesResumable(videoRef,videoFile)
       // await videoRef.put(videoFile);
 
 
 
       const thumbnailRef = ref(storage, `thumbnails/${thumbnailFile.name}`);
-      const uploadedThumbnail=uploadBytesResumable(thumbnailRef,thumbnailFile);
+      await uploadBytesResumable(thumbnailRef,thumbnailFile);
 
       // await thumbnailRef.put(thumbnailFile);
 
@@ -40,7 +37,6 @@ export const uploadVideo = async ({setVideoUrl,setThumbnailUrl,videoFile,thumbna
 
 
   
-      // Do something with the URLs (e.g., store in state)
  
     }
   };
