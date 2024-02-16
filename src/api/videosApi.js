@@ -24,10 +24,9 @@ export const uploadVideo=async(videoData)=>{
 export const getVideos=async({pageParam})=>{
     
     try{
-        console.log(pageParam)
         const pageSize=2;
         const response=await axios.get(`${BASE_URL}/videos/getVideos/?page=${pageParam}&pageSize=${pageSize}`)
-        return response?.data
+        return response
 
     }
         catch(error){

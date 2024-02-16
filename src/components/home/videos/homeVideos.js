@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { styled } from '@mui/joy/styles';
-import Sheet from '@mui/joy/Sheet';
-import Grid from '@mui/joy/Grid';
+
 import VideoCard from './videoCard';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { uploadVideotoFirebase } from '@/utils/helperFunctions/videosHelperFunctions';
 import { uploadVideo } from '@/api/videosApi';
 import { useDispatch, useSelector, useStore } from 'react-redux'
@@ -18,12 +16,14 @@ export default function HomeVideos() {
   const [videoTitle,setVideoTitle]=useState(null)
   const [description,setDescription]=useState(null)
   const[tags,setTags]=useState(null)
-  
+
+
+
+  const [page,setPage]=useState(1)
   const currentUser=useSelector((state)=>state.user.currentUser)
   
 
-  const [page,setPage]=useState(0)
-    
+  const [hasNextPage,setHasNextPage]=useState(false)    
 
 
 
@@ -59,7 +59,6 @@ export default function HomeVideos() {
     data,
     error,
     fetchNextPage,
-    hasNextPage,
     isFetching,
     isFetchingNextPage,
     status,}=useInfiniteQuery({
@@ -79,7 +78,18 @@ export default function HomeVideos() {
   },
   }
   )
-  console.log(data)
+  console.log(data?.pages)
+
+
+
+  useEffect(()=>{
+    setPage(data?.pageParams?.length)
+    setHasNextPage(data?.pages[page-1]?.data?.hasNextPage)
+
+  },[data,page,hasNextPage]);
+
+
+
   return (
 
   
