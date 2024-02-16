@@ -1,4 +1,5 @@
 import  axios  from "axios";
+import { Questrial } from "next/font/google";
 
 const BASE_URL = 'http://localhost:3001'; // Update with your API URL
 
@@ -20,13 +21,13 @@ export const uploadVideo=async(videoData)=>{
 
 }
 
-export const getVideos=async(data)=>{
+export const getVideos=async({pageParam})=>{
+    
     try{
-        const page=data?.page
-        const pageSize=data?.pageSize
-        const filter=data
-        const response=await axios.post(`${BASE_URL}/videos/getVideos/?filter=${filter}?page=${page}&pageSize=${pageSize}`)
-        return response
+        console.log(pageParam)
+        const pageSize=2;
+        const response=await axios.get(`${BASE_URL}/videos/getVideos/?page=${pageParam}&pageSize=${pageSize}`)
+        return response?.data
 
     }
         catch(error){

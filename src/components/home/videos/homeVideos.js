@@ -20,6 +20,13 @@ export default function HomeVideos() {
   const[tags,setTags]=useState(null)
   
   const currentUser=useSelector((state)=>state.user.currentUser)
+  
+
+  const [page,setPage]=useState(0)
+    
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,15 +55,36 @@ export default function HomeVideos() {
   };
 
 
-
-  const videos=useInfiniteQuery({queryKey:{}})
-
-
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,}=useInfiniteQuery({
+  queryFn:getVideos,
+  initialPageParam: 1,
+  getNextPageParam: (lastPage, allPages, lastPageParam) => {
+    if (lastPage.length === 0) {
+      return undefined
+    }
+    return lastPageParam + 1
+  },
+  getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+    if (firstPageParam <= 1) {
+      return undefined
+    }
+    return firstPageParam - 1
+  },
+  }
+  )
+  console.log(data)
   return (
 
   
 
-    <div class="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+    <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
     
       <VideoCard></VideoCard>
       <VideoCard></VideoCard>
@@ -65,6 +93,20 @@ export default function HomeVideos() {
       <VideoCard></VideoCard>
       <VideoCard></VideoCard>
       <VideoCard></VideoCard>
+
+
+      <div>
+        <button
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? 'Loading more...'
+            : hasNextPage
+              ? 'Load More'
+              : 'Nothing more to load'}
+        </button>
+      </div>        
 
 
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8 p-6 bg-gray-100 rounded-lg shadow-md text-black">
