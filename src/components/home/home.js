@@ -1,16 +1,19 @@
 "use client"
 import React from 'react'
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Navbar from './navbar/navbar';
 import HomeVideos from './videos/homeVideos';
 
 function Home() {
     const currentUser = useSelector((state) => state.user.currentUser);
+    const [searchName,setSearchName]=useState("")
+
   return (
 
     <div>
-        <Navbar></Navbar>
-        <HomeVideos></HomeVideos>
+        <Navbar setSearchName={setSearchName} ></Navbar>
+        <HomeVideos searchName={searchName}></HomeVideos>
 
      </div>
   )

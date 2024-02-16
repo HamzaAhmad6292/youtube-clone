@@ -7,7 +7,9 @@ import { uploadVideo } from '@/api/videosApi';
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import {useInfiniteQuery} from "@tanstack/react-query"
 import { getVideos } from '@/api/videosApi';
-export default function HomeVideos() {
+export default function HomeVideos({searchName}) {
+
+
 
   const [videoFile,setVideoFile]=useState(null)
   const[thumbnailFile,setThumbNailFile]=useState(null)
@@ -22,7 +24,7 @@ export default function HomeVideos() {
   const [page,setPage]=useState(1)
   const currentUser=useSelector((state)=>state.user.currentUser)
   
-
+  
   const [hasNextPage,setHasNextPage]=useState(false)    
 
 
@@ -62,7 +64,7 @@ export default function HomeVideos() {
     isFetching,
     isFetchingNextPage,
     status,}=useInfiniteQuery({
-    queryKey:{},
+    queryKey:{searchName},
     queryFn:getVideos,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {

@@ -69,9 +69,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({setSearchName}) {
   const [openDrawer, setOpenDrawer] = useState(false); // State to control drawer open/close
-
   // Function to handle drawer open
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -79,6 +78,8 @@ export default function Navbar() {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
+    
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -108,7 +109,9 @@ export default function Navbar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e)=>{setSearchName(e.target.value)}}
             />
+            
           </Search>
         </Toolbar>
       </AppBar>

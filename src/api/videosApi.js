@@ -21,7 +21,8 @@ export const uploadVideo=async(videoData)=>{
 
 }
 
-export const getVideos=async({pageParam})=>{
+export const getVideos=async({pageParam},data)=>{
+    console.log(data)
     
     try{
         const pageSize=2;
