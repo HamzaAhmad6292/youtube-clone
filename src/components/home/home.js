@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { useSelector } from 'react-redux';
-import Navbar from '../navbar';
+import Navbar from './navbar/navbar';
 import HomeVideos from './videos/homeVideos';
 
 function Home() {

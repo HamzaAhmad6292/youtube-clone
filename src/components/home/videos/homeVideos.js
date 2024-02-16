@@ -62,9 +62,10 @@ export default function HomeVideos() {
     isFetching,
     isFetchingNextPage,
     status,}=useInfiniteQuery({
-  queryFn:getVideos,
-  initialPageParam: 1,
-  getNextPageParam: (lastPage, allPages, lastPageParam) => {
+    queryKey:{},
+    queryFn:getVideos,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
     if (lastPage.length === 0) {
       return undefined
     }
