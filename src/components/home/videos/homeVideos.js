@@ -8,7 +8,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux'
 import {useInfiniteQuery} from "@tanstack/react-query"
 import { getVideos } from '@/api/videosApi';
 export default function HomeVideos({searchName}) {
-
+  
 
 
   const [videoFile,setVideoFile]=useState(null)
@@ -23,7 +23,7 @@ export default function HomeVideos({searchName}) {
 
   const [page,setPage]=useState(1)
   const currentUser=useSelector((state)=>state.user.currentUser)
-  
+  console.log(currentUser)
   
   const [hasNextPage,setHasNextPage]=useState(false)    
 

@@ -23,6 +23,8 @@ const dispatch=useDispatch()
 
 const handleSubmit=async(e)=>{
   e.preventDefault()
+  setemail("")
+  setpassword("")
   try{
   const response= await authService.login(userData)
   if(response?.status===200){

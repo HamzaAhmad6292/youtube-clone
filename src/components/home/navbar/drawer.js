@@ -19,11 +19,12 @@ import { useDispatch, useSelector, useStore } from 'react-redux'
 import { logoutUser } from '@/redux/slices/userSlices';
 function DrawerComponent({setOpenDrawer,handleDrawerClose,openDrawer}) {
     const dispatch=useDispatch()
+    const currentUser = useSelector((state) => state.user.currentUser);
 
 
 
     const handlelogout=()=>{
-        dispatch(logoutUser)
+        dispatch(logoutUser())
     }
   
 
