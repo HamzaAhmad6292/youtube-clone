@@ -18,12 +18,11 @@ export default function HomeVideos({searchName}) {
   const [videoTitle,setVideoTitle]=useState(null)
   const [description,setDescription]=useState(null)
   const[tags,setTags]=useState(null)
-
+  const [selectedVideos, setSelectedVideos] = useState([]);
 
 
   const [page,setPage]=useState(1)
   const currentUser=useSelector((state)=>state.user.currentUser)
-  console.log(currentUser)
   
   const [hasNextPage,setHasNextPage]=useState(false)    
 
@@ -42,7 +41,6 @@ export default function HomeVideos({searchName}) {
     });
 
     //this nigga to database
-    console.log(currentUser)
     const videoData={
       title:videoTitle,
       description:description,
@@ -53,7 +51,6 @@ export default function HomeVideos({searchName}) {
       videoLength:1,
     }
     const response=await uploadVideo(videoData)
-    console.log(response)
   };
 
 
@@ -78,34 +75,34 @@ export default function HomeVideos({searchName}) {
       return undefined
     }
     return firstPageParam - 1
-  },
+  },  
   }
   )
-  console.log(data?.pages)
 
-
-
-  useEffect(()=>{
-    setPage(data?.pageParams?.length)
-    setHasNextPage(data?.pages[page-1]?.data?.hasNextPage)
-
-  },[data,page,hasNextPage]);
-
-
+  useEffect(() => {
+    if (data && data?.pages && data?.pages[0] && data?.pages[0]?.data) {
+      setPage(data?.pageParams?.length);
+      setHasNextPage(data?.pages[page - 1]?.data?.hasNextPage);
+      setSelectedVideos(prevSelectedVideo => [
+        ...prevSelectedVideo,
+        ...data?.pages[page-1]?.data?.videos,
+      ]);
+    }
+  }, [data, page, hasNextPage]);
+console.log(selectedVideos)
 
   return (
 
   
 
-    <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+    <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-co ls-3 lg:grid-cols-4">
     
-      <VideoCard></VideoCard>
-      <VideoCard></VideoCard>
-      <VideoCard></VideoCard>
-      <VideoCard></VideoCard>
-      <VideoCard></VideoCard>
-      <VideoCard></VideoCard>
-      <VideoCard></VideoCard>
+    {selectedVideos.map((video) => (
+  <VideoCard key={video._id} />
+))}
+
+
+
 
 
       <div>

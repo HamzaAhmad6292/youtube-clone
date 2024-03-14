@@ -1,26 +1,50 @@
-import React from 'react'
-import { Image } from '@mui/icons-material'
-function VideoCard() {
-  return (
-    <div class="flex justify-center mb-2">
-    <div class="rounded-lg shadow-lg bg-white max-w-sm">
-        <a href="#!">
-            <Image width="320" height="240"  controls class="w-full rounded-t-lg">
-                <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4"/>
-                <source src="movie.ogg" type="video/ogg"/>
-                Your browser does not support the video tag.
-            </Image>
-        </a>
-        <div class="p-2">
-            <h5 class="text-gray-900 text-xl  mb-1">Video Card</h5>
-            <p class="text-gray-700 text-base ">
-      
-            </p>
-       
-        </div>
-    </div>
-    </div>
-    )
-}
+// components/VideoCard.js
 
-export default VideoCard
+import React from 'react';
+import styled from 'styled-components';
+
+const CardContainer = styled.div`
+  width: 100%;
+  max-width: 350px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+`;
+
+const Thumbnail = styled.video`
+  width: 100%;
+  height: auto;
+`;
+
+const Content = styled.div`
+  padding: 16px;
+`;
+
+const Title = styled.h3`
+  font-size: 18px;
+  margin: 4px;
+  color:#000000
+`;
+
+const Duration = styled.span`
+  font-size: 14px;
+  color: #666666;
+`;
+
+const VideoCard = ({ videoUrl, title="hamza the great", duration }) => {
+  return (
+    <CardContainer>
+      <Thumbnail autoPlay loop muted playsInline>
+        <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4" />
+      </Thumbnail>
+      <Content>
+        <Title>hamza the great</Title>
+        <Duration>{duration}</Duration>
+      </Content>
+    </CardContainer>
+  );
+};
+
+export default VideoCard;

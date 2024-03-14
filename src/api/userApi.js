@@ -6,7 +6,9 @@ const BASE_URL = 'http://localhost:3001'; // Update with your API URL
 const authService = {
   login: async (credentials) => {
     try {
+
       const response = await axios.post(`${BASE_URL}/users/loginuser`, credentials);
+      console.log(response)
       return response;
     } catch (error) {
       console.log(error)
