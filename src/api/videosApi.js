@@ -7,10 +7,9 @@ const BASE_URL = 'http://localhost:3001'; // Update with your API URL
 
 
 export const uploadVideo=async(videoData)=>{
-    
+    console.log(videoData)
     try {
         const response =await axios.post(`${BASE_URL}/videos/uploadvideo`,videoData);
-    
     if(response){
         return response;
     }
@@ -22,7 +21,6 @@ export const uploadVideo=async(videoData)=>{
 }
 
 export const getVideos=async({pageParam},data)=>{
-    console.log(data)
     
     try{
         const pageSize=2;

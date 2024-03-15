@@ -7,6 +7,7 @@ import { uploadVideo } from '@/api/videosApi';
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import {useInfiniteQuery} from "@tanstack/react-query"
 import { getVideos } from '@/api/videosApi';
+
 export default function HomeVideos({searchName}) {
   
 
@@ -29,29 +30,7 @@ export default function HomeVideos({searchName}) {
 
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    //this  nigga to firebase
-    await uploadVideotoFirebase({
-      setVideoUrl,
-      setThumbnailUrl,
-      videoFile,
-      thumbnailFile,
-    });
-
-    //this nigga to database
-    const videoData={
-      title:videoTitle,
-      description:description,
-      tags:tags,
-      videoUrl:videoUrl,
-      thumbnailUrl:thumbNailUrl,
-      uploader:currentUser?.userData._id,
-      videoLength:1,
-    }
-    const response=await uploadVideo(videoData)
-  };
 
 
   const {
@@ -81,32 +60,34 @@ export default function HomeVideos({searchName}) {
 
   useEffect(() => {
     if (data && data?.pages && data?.pages[0] && data?.pages[0]?.data) {
+  
       setPage(data?.pageParams?.length);
       setHasNextPage(data?.pages[page - 1]?.data?.hasNextPage);
-      setSelectedVideos(prevSelectedVideo => [
-        ...prevSelectedVideo,
-        ...data?.pages[page-1]?.data?.videos,
-      ]);
+      setSelectedVideos(data?.pages[page-1]?.data?.videos)
+      
     }
   }, [data, page, hasNextPage]);
-console.log(selectedVideos)
+  
+
+
+
 
   return (
 
   
 
     <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-co ls-3 lg:grid-cols-4">
-    
-    {selectedVideos.map((video) => (
-  <VideoCard key={video._id} />
-))}
+
+    {selectedVideos?.map((video) => (
+      <VideoCard key={video._id} />
+      ))}
 
 
 
 
 
-      <div>
-        <button
+      {/* <div>
+        <button className='rounded-sm text-gray-900  bg-blue-400 p-4'
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
         >
@@ -116,32 +97,30 @@ console.log(selectedVideos)
               ? 'Load More'
               : 'Nothing more to load'}
         </button>
-      </div>        
+      </div>      */}
 
 
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8 p-6 bg-gray-100 rounded-lg shadow-md text-black">
-  <div className="mb-4">
-    <label htmlFor="videoTitle" className="block text-gray-700 font-semibold mb-2">Video Title</label>
-    <input type="text" id="videoTitle" onChange={(e) => setVideoTitle(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="description" className="block text-gray-700 font-semibold mb-2">Description</label>
-    <input type="text" id="description" onChange={(e) => setDescription(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="tags" className="block text-gray-700 font-semibold mb-2">Tags</label>
-    <input type="text" id="tags" onChange={(e) => setTags(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="videoFile" className="block text-gray-700 font-semibold mb-2">Upload Video</label>
-    <input type="file" id="videoFile" onChange={(e) => setVideoFile(e.target.files[0])} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="thumbnailFile" className="block text-gray-700 font-semibold mb-2">Upload Thumbnail</label>
-    <input type="file" id="thumbnailFile" onChange={(e) => setThumbNailFile(e.target.files[0])} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
-  </div>
-  <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">Upload</button>
-</form>
+  <div
+    class="fter:h-px my-24 flex justify-center  items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
+    <button type="button"
+    onClick={() => fetchNextPage()}
+    disabled={!hasNextPage || isFetchingNextPage}
+    class="flex items-center rounded-full border border-gray-300 bg-gray-800 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gray-700 transition duration-300 ease-in-out">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mr-1 h-4 w-4">
+            <path fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd" />
+        </svg>
+        {isFetchingNextPage
+            ? 'Loading more...'
+            : hasNextPage
+              ? 'Load More'
+              : 'Nothing more to load'}
+        </button>
+  </div>   
+
+
+
 
 
     
