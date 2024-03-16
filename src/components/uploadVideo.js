@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { uploadVideotoFirebase } from '@/utils/helperFunctions/videosHelperFunctions';
 import { uploadVideo } from '@/api/videosApi';
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import {useMutation} from "@tanstack/react-query"
+
 
 
 
@@ -23,57 +23,40 @@ function UploadVideo() {
     const[tags,setTags]=useState(null)
     const dispatch=useDispatch()
     const currentUser=useSelector((state)=>state.user.currentUser)
-    
+  
 
-    const mutate = useMutation(async (videoData) => {
-      console.log("hamza the great")
-      try {
-        // Upload video and thumbnail to Firebase
-        const { videoUrl: firebaseVideoUrl, thumbnailUrl: firebaseThumbnailUrl } = await uploadVideotoFirebase({
-          videoFile,
-          thumbnailFile,
-        });
-  
-        // Update videoData with Firebase URLs
-        videoData.videoUrl = firebaseVideoUrl;
-        videoData.thumbnailUrl = firebaseThumbnailUrl;
-  
-        // Send the updated videoData to your backend API for database storage
-        const response = await uploadVideo(videoData); // Replace with your actual API call
-        console.log('Video upload response:', response);
-  
-        // Handle success (e.g., reset form, show success message)
-        // dispatch(someSuccessAction(response.data)); // Assuming you have a success action
-  
-        return videoData; // Return the updated videoData for potential use (optional)
-      } catch (error) {
-        console.error('Video upload error:', error);
-        // Handle errors (e.g., display error message to user)
-        // dispatch(someErrorAction(error.message)); // Assuming you have an error action
-      }
-    },{videoData});
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      // Validate input fields (optional)
-      // if (!videoFile || !videoTitle || !description || !tags) {
-      //   // Handle missing fields
-      //   return;
-      // }
-  
-      // Create video data object with initial properties
-      const videoData = {
-        title: videoTitle,
-        description: description,
-        tags: tags,
-        uploader: currentUser?.userName,
-        videoLength: 1, // Replace with actual video length calculation (optional)
-      };
-  
-      // Trigger the mutation
-      mutate.mutate(videoData);
-    };
+
+
+
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    //this  nigga to firebase
+    await uploadVideotoFirebase({
+      setVideoUrl,
+      setThumbnailUrl,
+      videoFile,
+      thumbnailFile,
+    });
+
+    //this nigga to database
+    const videoData={
+      title:videoTitle,
+      description:description,
+      tags:tags,
+      videoUrl:videoUrl,
+      thumbnailUrl:thumbNailUrl,
+      uploader:currentUser?.userName,
+      videoLength:1,
+    }
+    const response=await uploadVideo(videoData)
+    console.log(response)
+
+  };
+
 
 
 

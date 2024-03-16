@@ -10,6 +10,7 @@ export const uploadVideo=async(videoData)=>{
     console.log(videoData)
     try {
         const response =await axios.post(`${BASE_URL}/videos/uploadvideo`,videoData);
+        console.log(response)
     if(response){
         return response;
     }
