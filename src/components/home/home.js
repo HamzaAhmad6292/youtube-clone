@@ -11,7 +11,7 @@ function Home() {
 
   return (
 
-    <div>
+    <div className='  h-dvh bg-gradient-to-r from-gray-950 via-gray-800 to-gray-950'>
         <Navbar setSearchName={setSearchName} ></Navbar>
         <HomeVideos searchName={searchName}></HomeVideos>
 

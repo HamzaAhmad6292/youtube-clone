@@ -11,17 +11,27 @@ const ProtectedRoute = ({ children }) => {
   const currentUser=useSelector((state)=>state.user.currentUser)
 
   useEffect(() => {
-    const authToken = Cookies.get('response');
-    const userData=Cookies.get("userName")
-    console.log(currentUser)
-    console.log(authToken)
-    if(authToken)[
-      dispatch(loginUser())
-    ]
-    
-    if (!currentUser) {
-      router.replace('/login');
+    const storedData = localStorage.getItem('currentUser');
+
+    try{
+
+      console.log(storedData)
+     if(!currentUser){ 
+      if(storedData?.success==="true"){
+        dispatch(loginUser(storedData))
+      }
+      else{
+        console.log("hamza the great")
+        router.push("/login")
+      }
     }
+    
+
+  }
+  catch(error){
+    console.log(error)
+
+  }
   }, );
 
   return <>{children}</>;

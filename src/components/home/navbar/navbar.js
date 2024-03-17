@@ -82,7 +82,7 @@ export default function Navbar({setSearchName}) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{backgroundColor:"#222222"}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -100,7 +100,7 @@ export default function Navbar({setSearchName}) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            Hamza Tube
           </Typography>
           <Search>
             <SearchIconWrapper>

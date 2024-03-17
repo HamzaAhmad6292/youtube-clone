@@ -7,6 +7,7 @@ import { uploadVideo } from '@/api/videosApi';
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import {useInfiniteQuery} from "@tanstack/react-query"
 import { getVideos } from '@/api/videosApi';
+import { useRouter } from 'next/router';
 
 export default function HomeVideos({searchName}) {
   
@@ -24,7 +25,6 @@ export default function HomeVideos({searchName}) {
 
   const [page,setPage]=useState(1)
   const currentUser=useSelector((state)=>state.user.currentUser)
-  
   const [hasNextPage,setHasNextPage]=useState(false)    
 
 
@@ -70,38 +70,25 @@ export default function HomeVideos({searchName}) {
   
 
 
-
+console.log(selectedVideos)
 
   return (
 
   
 
-    <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-co ls-3 lg:grid-cols-4">
+    <div className="py-4 holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-co ls-3 lg:grid-cols-4">
 
     {selectedVideos?.map((video) => (
-      <VideoCard key={video._id} />
+      <VideoCard  video={video}  key={video._id} />
       ))}
 
 
 
 
 
-      {/* <div>
-        <button className='rounded-sm text-gray-900  bg-blue-400 p-4'
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-              ? 'Load More'
-              : 'Nothing more to load'}
-        </button>
-      </div>      */}
-
 
   <div
-    class="fter:h-px my-24 flex justify-center  items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
+    class="fter:h-px my-24  flex justify-center  items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
     <button type="button"
     onClick={() => fetchNextPage()}
     disabled={!hasNextPage || isFetchingNextPage}

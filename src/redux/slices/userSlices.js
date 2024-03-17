@@ -14,11 +14,14 @@ const userSlice=createSlice({
             state.isloading=false;
             state.currentUser=action.payload;
             state.error=null;
+            localStorage.setItem('currentUser', JSON.stringify(action.payload));
+
         },
         logoutUser(state){
             state.currentUser=null;
             state.isloading=true;
             state.error=null;
+            localStorage.removeItem('currentUser')
         }
     }
 })

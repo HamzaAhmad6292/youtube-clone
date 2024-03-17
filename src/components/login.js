@@ -13,7 +13,6 @@ export default function Login() {
 const [email,setemail]=useState("")
 const [password,setpassword]=useState("")
 const router=useRouter()
-
 const userData={
   email:email,
   password:password
