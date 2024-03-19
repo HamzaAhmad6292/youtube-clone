@@ -11,15 +11,6 @@ import { useRouter } from 'next/router';
 
 export default function HomeVideos({searchName}) {
   
-
-
-  const [videoFile,setVideoFile]=useState(null)
-  const[thumbnailFile,setThumbNailFile]=useState(null)
-  const [videoUrl,setVideoUrl]=useState(null)
-  const [thumbNailUrl,setThumbnailUrl]=useState(null)
-  const [videoTitle,setVideoTitle]=useState(null)
-  const [description,setDescription]=useState(null)
-  const[tags,setTags]=useState(null)
   const [selectedVideos, setSelectedVideos] = useState([]);
 
 
@@ -73,16 +64,18 @@ export default function HomeVideos({searchName}) {
 console.log(selectedVideos)
 
   return (
-
-  
-
-    <div className="py-4 holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-co ls-3 lg:grid-cols-4">
+    <>
+    
+    
+    
+    <div className=" py-4 holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-co ls-3 lg:grid-cols-4">
 
     {selectedVideos?.map((video) => (
       <VideoCard  video={video}  key={video._id} />
       ))}
 
 
+</div>
 
 
 
@@ -101,17 +94,17 @@ console.log(selectedVideos)
         {isFetchingNextPage
             ? 'Loading more...'
             : hasNextPage
-              ? 'Load More'
-              : 'Nothing more to load'}
+            ? 'Load More'
+            : 'Nothing more to load'}
         </button>
   </div>   
 
+    </>
 
 
 
 
     
     
-    </div>
   );
 }

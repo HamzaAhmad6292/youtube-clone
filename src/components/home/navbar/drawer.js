@@ -30,6 +30,7 @@ function DrawerComponent({ setOpenDrawer, handleDrawerClose, openDrawer }) {
 
   return (
     <Drawer
+      sx
       open={openDrawer}
       onClose={handleDrawerClose}
       // Apply Slide transition to the drawer
@@ -48,7 +49,7 @@ function DrawerComponent({ setOpenDrawer, handleDrawerClose, openDrawer }) {
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText primary="Username" secondary="user@gmail.com" />
+            <ListItemText primary={currentUser?.userName} />
           </ListItem>
         </List>
         <Divider />
@@ -80,7 +81,7 @@ function DrawerComponent({ setOpenDrawer, handleDrawerClose, openDrawer }) {
           {/* Dark mode toggle */}
           <ListItem button>
             <ListItemIcon>{/* {darkMode ? <Brightness7Icon /> : <Brightness4Icon />} */}</ListItemIcon>
-            <ListItemText primary={'Dark Mode'} />
+            {/* <ListItemText primary={'Dark Mode'} /> */}
           </ListItem>
         </List>
         <Divider />
